@@ -134,6 +134,9 @@ public sealed class MiniHttpServer : IDisposable
                 case ("/suggest", "POST"):
                     payload = await HandleSuggestAsync(ctx, ct).ConfigureAwait(false);
                     break;
+                case ("/next", "POST"):
+                    payload = _engine.SuggestNext();
+                    break;
                 case ("/accept", "POST"):
                     payload = await HandleAcceptAsync(ctx, ct).ConfigureAwait(false);
                     break;

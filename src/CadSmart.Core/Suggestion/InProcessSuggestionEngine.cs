@@ -19,5 +19,7 @@ public sealed class InProcessSuggestionEngine : ISuggestionEngine
     public Task<SuggestionResult> SuggestAsync(string? userInput, CancellationToken ct = default)
         => _service.SuggestAsync(userInput, ct);
 
+    public SuggestionResult SuggestNext() => _service.SuggestNext();
+
     public void Accept(string commandId) => _service.Accept(commandId);
 }

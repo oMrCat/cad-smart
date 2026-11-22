@@ -13,5 +13,8 @@ public interface ISuggestionEngine
 {
     Task<SuggestionResult> SuggestAsync(string? userInput, CancellationToken ct = default);
 
+    /// <summary>上下文感知推荐：根据最近执行序列推荐下一个命令。</summary>
+    SuggestionResult SuggestNext();
+
     void Accept(string commandId);
 }

@@ -63,6 +63,26 @@ public sealed class RemoteSuggestionEngine : ISuggestionEngine
         }
     }
 
+    /// <summary>上下文感知推荐：根据最近执行序列推荐"下一个命令"（服务端 /next 端点）。</summary>
+    public SuggestionResult SuggestNext()
+        => SuggestNextAsync().GetAwaiter().GetResult();
+
+    /// <summary>上下文感知推荐（异步版本）。</summary>
+    public async Task<SuggestionResult> SuggestNextAsync(CancellationToken ct = default)
+    {
+        try
+        {
+            using var resp = await _http.PostAsync(BaseUrl + "next", content: null, ct).ConfigureAwait(false);
+            resp.EnsureSuccessStatusCode();
+            var body = await resp.Content.ReadAsStringAsync(ct).ConfigureAwait(false);
+            return JsonSerializer.Deserialize<SuggestionResult>(body, JsonOpts) ?? EmptyResult();
+        }
+        catch (Exception)
+        {
+            return EmptyResult();
+        }
+    }
+
     public async void Accept(string commandId)
     {
         try
