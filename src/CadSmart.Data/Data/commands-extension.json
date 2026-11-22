@@ -1,0 +1,1079 @@
+[
+ {
+  "id": "LAYDEL",
+  "zh": "删除图层",
+  "aliases": [
+   "laydel"
+  ],
+  "pinyin": "shanchutuceng",
+  "initials": "sctc",
+  "category": "图层",
+  "desc": "删除图层及其全部对象",
+  "params": "选择图层对象 → 确认",
+  "keywords": [
+   "删图层"
+  ]
+ },
+ {
+  "id": "LAYMRG",
+  "zh": "合并图层",
+  "aliases": [
+   "laymrg"
+  ],
+  "pinyin": "hebingtuceng",
+  "initials": "hbtc",
+  "category": "图层",
+  "desc": "将一个图层合并到另一图层",
+  "params": "选合并层 → 选目标层",
+  "keywords": [
+   "图层合并"
+  ]
+ },
+ {
+  "id": "LAYFRZ",
+  "zh": "冻结图层",
+  "aliases": [
+   "layfrz"
+  ],
+  "pinyin": "dongjietuceng",
+  "initials": "djtc",
+  "category": "图层",
+  "desc": "冻结选中对象所在图层",
+  "params": "选择对象",
+  "keywords": [
+   "冻结"
+  ]
+ },
+ {
+  "id": "LAYTHW",
+  "zh": "解冻全部图层",
+  "aliases": [
+   "laythw"
+  ],
+  "pinyin": "jiedongquantuceng",
+  "initials": "jdqbtc",
+  "category": "图层",
+  "desc": "解冻所有图层",
+  "params": "",
+  "keywords": [
+   "解冻"
+  ]
+ },
+ {
+  "id": "LAYLCK",
+  "zh": "锁定图层",
+  "aliases": [
+   "laylck"
+  ],
+  "pinyin": "suodintuceng",
+  "initials": "sd tc",
+  "category": "图层",
+  "desc": "锁定选中对象所在图层",
+  "params": "选择对象",
+  "keywords": [
+   "锁图层"
+  ]
+ },
+ {
+  "id": "LAYULK",
+  "zh": "解锁图层",
+  "aliases": [
+   "layulk"
+  ],
+  "pinyin": "jiesuotuceng",
+  "initials": "jstc",
+  "category": "图层",
+  "desc": "解锁选中对象所在图层",
+  "params": "选择对象",
+  "keywords": [
+   "解锁图层"
+  ]
+ },
+ {
+  "id": "LAYWALK",
+  "zh": "图层漫游",
+  "aliases": [
+   "laywalk"
+  ],
+  "pinyin": "tucengmanyou",
+  "initials": "tcmy",
+  "category": "图层",
+  "desc": "逐层显示检查图层内容",
+  "params": "对话框操作",
+  "keywords": [
+   "逐层检查"
+  ]
+ },
+ {
+  "id": "LAYERP",
+  "zh": "上一个图层",
+  "aliases": [
+   "layerp"
+  ],
+  "pinyin": "shangyigetuceng",
+  "initials": "sygtc",
+  "category": "图层",
+  "desc": "恢复上一个图层设置",
+  "params": "",
+  "keywords": [
+   "图层回退"
+  ]
+ },
+ {
+  "id": "DIMOVERRIDE",
+  "zh": "标注替代",
+  "aliases": [
+   "dimover"
+  ],
+  "pinyin": "biaozhutidai",
+  "initials": "bztd",
+  "category": "标注",
+  "desc": "临时替代标注系统变量",
+  "params": "输入特性 → 值",
+  "keywords": [
+   "覆盖标注"
+  ]
+ },
+ {
+  "id": "DIMBREAK",
+  "zh": "标注打断",
+  "aliases": [
+   "dimbreak"
+  ],
+  "pinyin": "biaozhudaduan",
+  "initials": "bzdd",
+  "category": "标注",
+  "desc": "在标注与其他对象交叉处打断",
+  "params": "选择标注 → 选择打断对象",
+  "keywords": [
+   "打断标注"
+  ]
+ },
+ {
+  "id": "DIMSPACE",
+  "zh": "标注间距",
+  "aliases": [
+   "dimspace"
+  ],
+  "pinyin": "biaozhujianju",
+  "initials": "bzjj",
+  "category": "标注",
+  "desc": "调整平行标注间距",
+  "params": "选择标注 → 间距值",
+  "keywords": [
+   "标注对齐"
+  ]
+ },
+ {
+  "id": "DIMCENTER",
+  "zh": "圆心标记",
+  "aliases": [
+   "dce"
+  ],
+  "pinyin": "yuanxinbiaoji",
+  "initials": "yxbj",
+  "category": "标注",
+  "desc": "创建圆/圆弧的圆心标记",
+  "params": "选择圆弧",
+  "keywords": [
+   "十字中心线"
+  ]
+ },
+ {
+  "id": "DIMARC",
+  "zh": "弧长标注",
+  "aliases": [
+   "dimarc"
+  ],
+  "pinyin": "huchangbiaozhu",
+  "initials": "hcbz",
+  "category": "标注",
+  "desc": "标注圆弧弧长",
+  "params": "选择弧 → 位置",
+  "keywords": [
+   "弧长"
+  ]
+ },
+ {
+  "id": "DIMJOGGED",
+  "zh": "折弯半径",
+  "aliases": [
+   "djo"
+  ],
+  "pinyin": "zhewanbanjing",
+  "initials": "zw bj",
+  "category": "标注",
+  "desc": "大圆弧的折弯半径标注",
+  "params": "选圆弧 → 中心点 → 位置",
+  "keywords": [
+   "折弯标注"
+  ]
+ },
+ {
+  "id": "QDIM",
+  "zh": "快速标注",
+  "aliases": [
+   "qdim"
+  ],
+  "pinyin": "kuaisubiaozhu",
+  "initials": "ksbz",
+  "category": "标注",
+  "desc": "快速创建一系列标注",
+  "params": "选择几何图形 → 标注类型",
+  "keywords": [
+   "快速标注"
+  ]
+ },
+ {
+  "id": "MLEADERSTYLE",
+  "zh": "多重引线样式",
+  "aliases": [
+   "mls"
+  ],
+  "pinyin": "duochongyinxianyangshi",
+  "initials": "dcyxys",
+  "category": "标注",
+  "desc": "定义多重引线样式",
+  "params": "对话框操作",
+  "keywords": [
+   "引线样式"
+  ]
+ },
+ {
+  "id": "TEXTTOFRONT",
+  "zh": "文字置前",
+  "aliases": [
+   "tfront"
+  ],
+  "pinyin": "wenzi zhiqian",
+  "initials": "wzzq",
+  "category": "标注",
+  "desc": "将文字/标注置于所有对象之前",
+  "params": "文字T/标注D/引线L",
+  "keywords": [
+   "文字被遮挡"
+  ]
+ },
+ {
+  "id": "ATTEDIT",
+  "zh": "编辑属性",
+  "aliases": [
+   "ate"
+  ],
+  "pinyin": "bianjishuxing",
+  "initials": "bjsx",
+  "category": "块与参照",
+  "desc": "编辑块内属性值",
+  "params": "选择块参照",
+  "keywords": [
+   "改属性值"
+  ]
+ },
+ {
+  "id": "BATTMAN",
+  "zh": "块属性管理器",
+  "aliases": [
+   "batman"
+  ],
+  "pinyin": "kuashuxingguanliqi",
+  "initials": "ksxglq",
+  "category": "块与参照",
+  "desc": "管理块属性定义",
+  "params": "对话框操作",
+  "keywords": [
+   "属性管理"
+  ]
+ },
+ {
+  "id": "ATTSYNC",
+  "zh": "属性同步",
+  "aliases": [
+   "atsync"
+  ],
+  "pinyin": "shuxingtongbu",
+  "initials": "sxtb",
+  "category": "块与参照",
+  "desc": "用块定义更新属性块实例",
+  "params": "块名/选择",
+  "keywords": [
+   "同步属性"
+  ]
+ },
+ {
+  "id": "BCOUNT",
+  "zh": "块计数",
+  "aliases": [
+   "bcount"
+  ],
+  "pinyin": "kuaijishu",
+  "initials": "kjs",
+  "category": "块与参照",
+  "desc": "统计选择集中块的数量",
+  "params": "选择对象/全部",
+  "keywords": [
+   "块统计",
+   "数量统计",
+   "材料表"
+  ]
+ },
+ {
+  "id": "BCLOSE",
+  "zh": "关闭块编辑器",
+  "aliases": [
+   "bclose"
+  ],
+  "pinyin": "guanbikuabianjiqi",
+  "initials": "gbkbjq",
+  "category": "块与参照",
+  "desc": "关闭块编辑器保存或不保存",
+  "params": "保存/不保存",
+  "keywords": [
+   "退出块编辑"
+  ]
+ },
+ {
+  "id": "REFEDIT",
+  "zh": "在位编辑参照",
+  "aliases": [
+   "refedit"
+  ],
+  "pinyin": "zaiweibianjicanzhao",
+  "initials": "zwbjcz",
+  "category": "块与参照",
+  "desc": "就地编辑外部参照或块",
+  "params": "选择参照",
+  "keywords": [
+   "编辑外部图"
+  ]
+ },
+ {
+  "id": "REFCLOSE",
+  "zh": "保存参照修改",
+  "aliases": [
+   "refclose"
+  ],
+  "pinyin": "baocuncanzhaoxiugai",
+  "initials": "bcczxg",
+  "category": "块与参照",
+  "desc": "保存或放弃在位参照修改",
+  "params": "保存/放弃",
+  "keywords": [
+   "结束参照编辑"
+  ]
+ },
+ {
+  "id": "IMAGEATTACH",
+  "zh": "附着图像",
+  "aliases": [
+   "iat"
+  ],
+  "pinyin": "fuzhutuxiang",
+  "initials": "fztx",
+  "category": "块与参照",
+  "desc": "将光栅图像附着到图形",
+  "params": "选文件 → 插入点 → 缩放",
+  "keywords": [
+   "插入图片",
+   "贴图"
+  ]
+ },
+ {
+  "id": "PDFATTACH",
+  "zh": "附着 PDF",
+  "aliases": [
+   "pdfa"
+  ],
+  "pinyin": "fuzhupdf",
+  "initials": "pdf",
+  "category": "块与参照",
+  "desc": "将 PDF 文件作为参照附着",
+  "params": "选文件 → 插入点",
+  "keywords": [
+   "插入PDF"
+  ]
+ },
+ {
+  "id": "DATALINK",
+  "zh": "数据链接",
+  "aliases": [
+   "dl"
+  ],
+  "pinyin": "shujulianjie",
+  "initials": "sjlj",
+  "category": "块与参照",
+  "desc": "链接 Excel 表格到图形",
+  "params": "管理数据链接",
+  "keywords": [
+   "插入表格",
+   "Excel链接"
+  ]
+ },
+ {
+  "id": "TABLE",
+  "zh": "表格",
+  "aliases": [
+   "tb"
+  ],
+  "pinyin": "biaoge",
+  "initials": "bg",
+  "category": "块与参照",
+  "desc": "插入空白表格对象",
+  "params": "指定插入点",
+  "keywords": [
+   "明细表",
+   "插入表"
+  ]
+ },
+ {
+  "id": "TABLESTYLE",
+  "zh": "表格样式",
+  "aliases": [
+   "tablestyle"
+  ],
+  "pinyin": "biaogeyangshi",
+  "initials": "bgys",
+  "category": "块与参照",
+  "desc": "定义表格样式",
+  "params": "对话框操作",
+  "keywords": [
+   "表格格式"
+  ]
+ },
+ {
+  "id": "FIELD",
+  "zh": "字段",
+  "aliases": [
+   "field"
+  ],
+  "pinyin": "ziduan",
+  "initials": "zd",
+  "category": "块与参照",
+  "desc": "插入可自动更新的字段文本",
+  "params": "选择字段类别",
+  "keywords": [
+   "自动文字",
+   "日期字段"
+  ]
+ },
+ {
+  "id": "HYPERLINK",
+  "zh": "超链接",
+  "aliases": [
+   "hyperlink"
+  ],
+  "pinyin": "chaolianjie",
+  "initials": "clj",
+  "category": "块与参照",
+  "desc": "为对象附加超链接",
+  "params": "选择对象 → 链接地址",
+  "keywords": [
+   "链接"
+  ]
+ },
+ {
+  "id": "MASSPROP",
+  "zh": "质量特性",
+  "aliases": [
+   "massprop"
+  ],
+  "pinyin": "zhiliangtexing",
+  "initials": "zltx",
+  "category": "查询",
+  "desc": "计算三维实体质量特性",
+  "params": "选择实体",
+  "keywords": [
+   "重心",
+   "惯量"
+  ]
+ },
+ {
+  "id": "VOLUME",
+  "zh": "体积",
+  "aliases": [
+   "volume"
+  ],
+  "pinyin": "tiji",
+  "initials": "tj",
+  "category": "查询",
+  "desc": "测量三维体积（MEASUREGEOM 子项）",
+  "params": "选择实体",
+  "keywords": [
+   "算体积"
+  ]
+ },
+ {
+  "id": "TIME",
+  "zh": "时间",
+  "aliases": [
+   "time"
+  ],
+  "pinyin": "shijian",
+  "initials": "sj",
+  "category": "查询",
+  "desc": "显示绘图时间统计",
+  "params": "",
+  "keywords": [
+   "绘图时长"
+  ]
+ },
+ {
+  "id": "STATUS",
+  "zh": "状态",
+  "aliases": [
+   "status"
+  ],
+  "pinyin": "zhuangtai",
+  "initials": "zt",
+  "category": "查询",
+  "desc": "显示图形统计信息",
+  "params": "",
+  "keywords": [
+   "图形信息"
+  ]
+ },
+ {
+  "id": "SETVAR",
+  "zh": "系统变量",
+  "aliases": [
+   "setvar"
+  ],
+  "pinyin": "xitongbianliang",
+  "initials": "xtbl",
+  "category": "查询",
+  "desc": "查询或设置系统变量",
+  "params": "变量名 → 值",
+  "keywords": [
+   "变量设置"
+  ]
+ },
+ {
+  "id": "SPACETRANS",
+  "zh": "空间换算",
+  "aliases": [],
+  "pinyin": "kongjianhuansuan",
+  "initials": "kjhs",
+  "category": "设置与工具",
+  "desc": "模型/图纸空间坐标换算",
+  "params": "",
+  "keywords": []
+ },
+ {
+  "id": "CHSPACE",
+  "zh": "变更空间",
+  "aliases": [
+   "chspace"
+  ],
+  "pinyin": "biangengkongjian",
+  "initials": "bgkj",
+  "category": "设置与工具",
+  "desc": "在布局视口间移动对象",
+  "params": "选择对象",
+  "keywords": [
+   "模型空间图纸空间"
+  ]
+ },
+ {
+  "id": "RENAME",
+  "zh": "重命名",
+  "aliases": [
+   "ren"
+  ],
+  "pinyin": "chongmingming",
+  "initials": "cmm",
+  "category": "设置与工具",
+  "desc": "重命名块/图层/样式等",
+  "params": "旧名 → 新名",
+  "keywords": [
+   "改名"
+  ]
+ },
+ {
+  "id": "COPYCLIP",
+  "zh": "复制到剪贴板",
+  "aliases": [
+   "ctrlc"
+  ],
+  "pinyin": "fuzhidaojiantieban",
+  "initials": "fzjtb",
+  "category": "设置与工具",
+  "desc": "复制对象到剪贴板（Ctrl+C）",
+  "params": "选择对象",
+  "keywords": [
+   "复制粘贴"
+  ]
+ },
+ {
+  "id": "PASTECLIP",
+  "zh": "粘贴",
+  "aliases": [
+   "ctrlv"
+  ],
+  "pinyin": "zhantie",
+  "initials": "zt",
+  "category": "设置与工具",
+  "desc": "粘贴剪贴板内容（Ctrl+V）",
+  "params": "指定插入点",
+  "keywords": [
+   "粘贴"
+  ]
+ },
+ {
+  "id": "SHELL",
+  "zh": "运行程序",
+  "aliases": [
+   "shell"
+  ],
+  "pinyin": "yunxingchengxu",
+  "initials": "yxcx",
+  "category": "设置与工具",
+  "desc": "在图形内调用外部程序",
+  "params": "命令行",
+  "keywords": [
+   "外部命令"
+  ]
+ },
+ {
+  "id": "TOOLBAR",
+  "zh": "工具栏",
+  "aliases": [
+   "toolbar"
+  ],
+  "pinyin": "gongjulan",
+  "initials": "gjl",
+  "category": "设置与工具",
+  "desc": "自定义工具栏显示",
+  "params": "工具栏名",
+  "keywords": [
+   "界面设置"
+  ]
+ },
+ {
+  "id": "MENULOAD",
+  "zh": "加载菜单",
+  "aliases": [
+   "menuload"
+  ],
+  "pinyin": "jiazhicaidan",
+  "initials": "jzcd",
+  "category": "设置与工具",
+  "desc": "加载自定义菜单文件",
+  "params": "文件名",
+  "keywords": [
+   "菜单自定义"
+  ]
+ },
+ {
+  "id": "SCALELISTEDIT",
+  "zh": "缩放比例列表",
+  "aliases": [
+   "scalelist"
+  ],
+  "pinyin": "suofangbiliebiao",
+  "initials": "sfblb",
+  "category": "设置与工具",
+  "desc": "编辑显示比例列表",
+  "params": "对话框操作",
+  "keywords": [
+   "比例列表"
+  ]
+ },
+ {
+  "id": "OVERKILL",
+  "zh": "删除重复对象",
+  "aliases": [
+   "overkill"
+  ],
+  "pinyin": "shanchuchongfuduixiang",
+  "initials": "sccfdx",
+  "category": "设置与工具",
+  "desc": "删除重叠重复的几何对象",
+  "params": "选择对象",
+  "keywords": [
+   "去重",
+   "清理重复线",
+   "重叠对象"
+  ]
+ },
+ {
+  "id": "CHECKSTANDARDS",
+  "zh": "检查标准",
+  "aliases": [
+   "standards"
+  ],
+  "pinyin": "jianchabiaozhun",
+  "initials": "jcbz",
+  "category": "设置与工具",
+  "desc": "检查图形是否符合 CAD 标准",
+  "params": "配置标准文件",
+  "keywords": [
+   "标准检查"
+  ]
+ },
+ {
+  "id": "DWGPROPS",
+  "zh": "图纸属性",
+  "aliases": [
+   "dwgprops"
+  ],
+  "pinyin": "tuzhishuxing",
+  "initials": "tzsx",
+  "category": "设置与工具",
+  "desc": "编辑图形文件属性",
+  "params": "对话框操作",
+  "keywords": [
+   "文件信息"
+  ]
+ },
+ {
+  "id": "3DPOLY",
+  "zh": "三维多段线",
+  "aliases": [
+   "3p"
+  ],
+  "pinyin": "sanweiduoduanxian",
+  "initials": "swddx",
+  "category": "三维",
+  "desc": "创建三维空间多段线",
+  "params": "指定点系列",
+  "keywords": [
+   "立体线"
+  ]
+ },
+ {
+  "id": "HELIX",
+  "zh": "螺旋线",
+  "aliases": [
+   "helix"
+  ],
+  "pinyin": "luoxuanxian",
+  "initials": "lxx",
+  "category": "三维",
+  "desc": "创建二维/三维螺旋线",
+  "params": "底面中心 → 半径 → 圈数",
+  "keywords": [
+   "弹簧线",
+   "螺纹线"
+  ]
+ },
+ {
+  "id": "PLANESURF",
+  "zh": "平面曲面",
+  "aliases": [
+   "planesurf"
+  ],
+  "pinyin": "pingmianqumian",
+  "initials": "pmqm",
+  "category": "三维",
+  "desc": "创建平面曲面",
+  "params": "指定角点/对象",
+  "keywords": [
+   "曲面"
+  ]
+ },
+ {
+  "id": "SURFPATCH",
+  "zh": "曲面修补",
+  "aliases": [
+   "patch"
+  ],
+  "pinyin": "qumianxiubu",
+  "initials": "qmxb",
+  "category": "三维",
+  "desc": "在曲面边界间创建修补面",
+  "params": "选择边界",
+  "keywords": [
+   "封口"
+  ]
+ },
+ {
+  "id": "PRESSPULL",
+  "zh": "按住并拖动",
+  "aliases": [
+   "presspull"
+  ],
+  "pinyin": "anzhubingtuodong",
+  "initials": "azbtd",
+  "category": "三维",
+  "desc": "按住拖动动态拉伸/偏移区域",
+  "params": "在区域内部单击",
+  "keywords": [
+   "动态拉伸"
+  ]
+ },
+ {
+  "id": "3DALIGN",
+  "zh": "三维对齐",
+  "aliases": [
+   "3al"
+  ],
+  "pinyin": "sanweiduiqi",
+  "initials": "swdq",
+  "category": "三维",
+  "desc": "在三维空间对齐对象",
+  "params": "源点对 → 目标点对",
+  "keywords": [
+   "空间对齐"
+  ]
+ },
+ {
+  "id": "3DMIRROR",
+  "zh": "三维镜像",
+  "aliases": [
+   "3mirror"
+  ],
+  "pinyin": "sanweijingxiang",
+  "initials": "swjx",
+  "category": "三维",
+  "desc": "沿三维平面镜像对象",
+  "params": "选择对象 → 镜像平面",
+  "keywords": [
+   "空间对称"
+  ]
+ },
+ {
+  "id": "3DARRAY",
+  "zh": "三维阵列",
+  "aliases": [
+   "3a"
+  ],
+  "pinyin": "sanweizhenlie",
+  "initials": "swzl",
+  "category": "三维",
+  "desc": "三维矩形/环形阵列",
+  "params": "行/列/层 → 间距",
+  "keywords": [
+   "空间阵列"
+  ]
+ },
+ {
+  "id": "FLATSHOT",
+  "zh": "平面摄影",
+  "aliases": [
+   "flatshot"
+  ],
+  "pinyin": "pingmiansheying",
+  "initials": "pmsy",
+  "category": "三维",
+  "desc": "生成三维模型的二维投影视图",
+  "params": "对话框操作",
+  "keywords": [
+   "三视图生成",
+   "平面图"
+  ]
+ },
+ {
+  "id": "SECTIONPLANE",
+  "zh": "截面平面",
+  "aliases": [
+   "sectionplane"
+  ],
+  "pinyin": "jiemianpingmian",
+  "initials": "jmpm",
+  "category": "三维",
+  "desc": "创建三维截面剖切平面",
+  "params": "指定平面",
+  "keywords": [
+   "剖切面"
+  ]
+ },
+ {
+  "id": "VSCURRENT",
+  "zh": "视觉样式",
+  "aliases": [
+   "vscurrent"
+  ],
+  "pinyin": "shijueyangshi",
+  "initials": "sjys",
+  "category": "三维",
+  "desc": "设置当前视觉样式",
+  "params": "二维线框W/真实R/概念C",
+  "keywords": [
+   "渲染模式",
+   "显示样式"
+  ]
+ },
+ {
+  "id": "RENDER",
+  "zh": "渲染",
+  "aliases": [
+   "render"
+  ],
+  "pinyin": "xuanran",
+  "initials": "xr",
+  "category": "三维",
+  "desc": "生成真实感渲染图像",
+  "params": "渲染目标",
+  "keywords": [
+   "出效果图"
+  ]
+ },
+ {
+  "id": "MATLIB",
+  "zh": "材质库",
+  "aliases": [
+   "matlib"
+  ],
+  "pinyin": "caizhiku",
+  "initials": "czk",
+  "category": "三维",
+  "desc": "打开材质库浏览器",
+  "params": "选择材质",
+  "keywords": [
+   "材质贴图"
+  ]
+ },
+ {
+  "id": "LIGHTS",
+  "zh": "光源",
+  "aliases": [
+   "lights"
+  ],
+  "pinyin": "guangyuan",
+  "initials": "gy",
+  "category": "三维",
+  "desc": "管理场景光源",
+  "params": "点光/聚光/平行光",
+  "keywords": [
+   "灯光"
+  ]
+ },
+ {
+  "id": "VPORTS",
+  "zh": "视口",
+  "aliases": [
+   "vports"
+  ],
+  "pinyin": "shikou",
+  "initials": "sk",
+  "category": "视图",
+  "desc": "分割模型视口（多视图同时查看）",
+  "params": "对话框操作",
+  "keywords": [
+   "多视口",
+   "分屏"
+  ]
+ },
+ {
+  "id": "VPMAX",
+  "zh": "最大化视口",
+  "aliases": [
+   "vpmax"
+  ],
+  "pinyin": "zuidahuashikou",
+  "initials": "zd hsk",
+  "category": "视图",
+  "desc": "最大化当前布局视口",
+  "params": "双击边界",
+  "keywords": [
+   "视口放大"
+  ]
+ },
+ {
+  "id": "3DCONFIG",
+  "zh": "三维配置",
+  "aliases": [
+   "3dconfig"
+  ],
+  "pinyin": "sanweipeizhi",
+  "initials": "swpz",
+  "category": "视图",
+  "desc": "调整三维图形显示性能",
+  "params": "手动/硬件加速",
+  "keywords": [
+   "性能设置"
+  ]
+ },
+ {
+  "id": "NAVVCUBE",
+  "zh": "ViewCube",
+  "aliases": [
+   "navvcube"
+  ],
+  "pinyin": "shitu bang",
+  "initials": "stb",
+  "category": "视图",
+  "desc": "显示/隐藏导航立方体",
+  "params": "开ON/关OFF",
+  "keywords": [
+   "视图方块"
+  ]
+ },
+ {
+  "id": "WIPEOUTFR",
+  "zh": "前置显示",
+  "aliases": [
+   "draworder"
+  ],
+  "pinyin": "qianzhixianshi",
+  "initials": "qzxs",
+  "category": "视图",
+  "desc": "调整对象显示顺序",
+  "params": "前置F/后置B/对象上A",
+  "keywords": [
+   "显示顺序",
+   "置顶"
+  ]
+ },
+ {
+  "id": "QSAVE",
+  "zh": "快速保存",
+  "aliases": [
+   "qsave"
+  ],
+  "pinyin": "kuaisubaocun",
+  "initials": "ksbc",
+  "category": "视图",
+  "desc": "保存当前图形（Ctrl+S）",
+  "params": "",
+  "keywords": [
+   "保存文件"
+  ]
+ },
+ {
+  "id": "SAVEMAIN",
+  "zh": "另存为",
+  "aliases": [
+   "saveas"
+  ],
+  "pinyin": "lingcunwei",
+  "initials": "lcw",
+  "category": "视图",
+  "desc": "以新名称保存图形副本",
+  "params": "文件名/格式",
+  "keywords": [
+   "另存",
+   "导出版本"
+  ]
+ },
+ {
+  "id": "RECOVER",
+  "zh": "修复",
+  "aliases": [
+   "recover"
+  ],
+  "pinyin": "xiufu",
+  "initials": "xf",
+  "category": "视图",
+  "desc": "修复损坏的图形文件",
+  "params": "选择文件",
+  "keywords": [
+   "文件损坏",
+   "打不开"
+  ]
+ },
+ {
+  "id": "PLOTPREVIEW",
+  "zh": "打印预览",
+  "aliases": [
+   "preview"
+  ],
+  "pinyin": "dayinyulan",
+  "initials": "dyyl",
+  "category": "视图",
+  "desc": "预览打印效果",
+  "params": "",
+  "keywords": [
+   "预览图纸"
+  ]
+ }
+]

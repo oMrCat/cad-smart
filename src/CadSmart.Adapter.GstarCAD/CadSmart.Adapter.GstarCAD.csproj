@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>CadSmart.Adapter.GstarCAD</RootNamespace>
+    <Description>CAD 智能命令提示 - 浩辰 CAD 适配器骨架（真机需 GRX/Gcad 程序集）</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CadSmart.Core\CadSmart.Core.csproj" />
+  </ItemGroup>
+
+</Project>

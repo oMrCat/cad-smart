@@ -1,0 +1,19 @@
+# Build results
+bin/
+obj/
+dist/
+publish/
+
+# IDE
+.vs/
+.idea/
+*.user
+*.suo
+
+# Runtime data
+usage.json
+*.tmp
+
+# OS
+Thumbs.db
+.DS_Store

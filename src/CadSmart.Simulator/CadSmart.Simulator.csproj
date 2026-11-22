@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>CadSmart.Simulator</RootNamespace>
+    <Description>CAD 智能命令提示 - 无 CAD 环境的命令行模拟器（开发自测用）</Description>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CadSmart.Core\CadSmart.Core.csproj" />
+    <ProjectReference Include="..\CadSmart.Data\CadSmart.Data.csproj" />
+  </ItemGroup>
+
+</Project>

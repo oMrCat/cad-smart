@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>CadSmart.Simulator.Wpf</RootNamespace>
+    <Description>CAD 智能命令提示 - WPF 候选框原型（验证阶段0"候选框 UI 可行性"）</Description>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <AssemblyName>CadSmart.Simulator.Wpf</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CadSmart.Core\CadSmart.Core.csproj" />
+    <ProjectReference Include="..\CadSmart.Data\CadSmart.Data.csproj" />
+  </ItemGroup>
+
+</Project>

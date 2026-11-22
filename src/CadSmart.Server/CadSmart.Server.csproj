@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>CadSmart.Server</RootNamespace>
+    <Description>CAD 智能命令提示 - 引擎独立服务进程（阶段2重构#1：localhost JSON API）</Description>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CadSmart.Core\CadSmart.Core.csproj" />
+    <ProjectReference Include="..\CadSmart.Data\CadSmart.Data.csproj" />
+  </ItemGroup>
+
+</Project>

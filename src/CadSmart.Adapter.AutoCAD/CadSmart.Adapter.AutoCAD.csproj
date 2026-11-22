@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>CadSmart.Adapter.AutoCAD</RootNamespace>
+    <Description>CAD 智能命令提示 - AutoCAD 平台适配器（薄壳；真机开发需引用 acmgd/acdbmgd/accoremgd）</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CadSmart.Core\CadSmart.Core.csproj" />
+  </ItemGroup>
+
+</Project>
