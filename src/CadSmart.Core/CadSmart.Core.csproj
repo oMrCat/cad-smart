@@ -9,4 +9,6 @@
     <Description>CAD 智能命令提示 - 核心引擎（平台无关）</Description>
   </PropertyGroup>
 
+  <!-- GPU 检测已改用 PowerShell 子进程（免 WMI 程序集依赖，避免部署机 System.Management 版本地狱） -->
+
 </Project>

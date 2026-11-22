@@ -6,10 +6,15 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
     <RootNamespace>CadSmart.Adapter.AutoCAD</RootNamespace>
+    <UseWPF>true</UseWPF>
     <Description>CAD 智能命令提示 - AutoCAD 平台适配器（薄壳；真机开发需引用 acmgd/acdbmgd/accoremgd）</Description>
   </PropertyGroup>
 
+  <!-- 真版插件（RealAdapter.cs）需要 AutoCAD 2018 .NET 引用（net48/ObjectARX .NET API）。
+       真机编译用独立项目文件（见 CadSmart.Adapter.AutoCAD.Real.csproj），本 csproj 保持跨平台构建。
+       RealAdapter.cs 已从本项目的编译集排除： -->
   <ItemGroup>
+    <Compile Remove="RealAdapter.cs" Condition="'$(DefineConstants.Contains(HAS_AUTOCAD))' == 'false'" />
     <ProjectReference Include="..\CadSmart.Core\CadSmart.Core.csproj" />
   </ItemGroup>
 

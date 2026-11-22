@@ -98,6 +98,16 @@ var engine = new InProcessSuggestionEngine(
         LlmWaitMs = int.TryParse(Environment.GetEnvironmentVariable("CADSMART_LLM_WAITMS"), out var wm) ? wm : 20000,
     });
 
+// GPU 加速检测（默认 auto：有合适 GPU 自动启用 offload；可用 CADSMART_GPU_MODE=cpu|gpu|auto 覆盖）
+var gpuModeEnv = Environment.GetEnvironmentVariable("CADSMART_GPU_MODE");
+if (!string.IsNullOrWhiteSpace(gpuModeEnv))
+{
+    GpuDetector.SetMode(gpuModeEnv);
+}
+
+var gpuStatus = GpuDetector.Detect();
+SafeLog($"GPU 加速: {(gpuStatus.GpuName is { Length: > 0 } ? gpuStatus.GpuName : "无 NVIDIA GPU")} | 引擎={gpuStatus.EngineVariant} | offload={(gpuStatus.CanOffload ? "可用" : "不可用")} | 生效={gpuStatus.ActiveDevice}{(gpuStatus.Reason is { Length: > 0 } ? $"（{gpuStatus.Reason}）" : string.Empty)}");
+
 // --once 模式：处理单条输入后输出结果并退出（CI/沙箱验证专用，规避长驻进程管理）。
 //   用法: CadSmart.Server.exe --once --input "删除全部窗户" [--port 47600]
 var onceIdx = Array.IndexOf(args, "--once");

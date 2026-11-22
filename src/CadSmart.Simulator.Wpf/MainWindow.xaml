@@ -47,6 +47,15 @@
 
         <StackPanel Grid.Row="3" Margin="0,8,0,0">
             <TextBlock x:Name="ExecutedText" Foreground="#97C459" FontSize="12"/>
+            <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                <Button x:Name="GpuButton" Content="⚡ GPU 加速: 自动"
+                        Click="GpuButton_Click"
+                        Background="#2A2A2A" Foreground="#BBBBBB" BorderBrush="#444444"
+                        Padding="8,3" FontSize="11" Cursor="Hand"
+                        ToolTip="GPU 推理加速（自动=识别到合适 GPU 自动开启）"/>
+                <TextBlock x:Name="GpuInfoText" Foreground="#666666" FontSize="11"
+                           Margin="8,6,0,0" TextTrimming="CharacterEllipsis" MaxWidth="360"/>
+            </StackPanel>
             <TextBlock x:Name="StatusText" Foreground="#666666" FontSize="11" Margin="0,4,0,0"/>
         </StackPanel>
     </Grid>

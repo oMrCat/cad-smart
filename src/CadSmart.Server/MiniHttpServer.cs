@@ -4,6 +4,7 @@ using System.Net;
 using System.Text;
 using System.Text.Json;
 using CadSmart.Core.Domain;
+using CadSmart.Core.Providers;
 using CadSmart.Core.Setup;
 using CadSmart.Core.Suggestion;
 
@@ -131,6 +132,26 @@ public sealed class MiniHttpServer : IDisposable
                     payload = _availability
                         ?? (object)new { mode = "unknown", userMessage = "未检测" };
                     break;
+                case ("/gpu/status", "GET"):
+                    payload = GpuDetector.Detect();
+                    break;
+                case ("/gpu/mode", "POST"):
+                {
+                    var body = await ReadBodyAsync(ctx.Request, ct).ConfigureAwait(false);
+                    var mode = ExtractString(body, "mode");
+                    if (mode is "auto" or "cpu" or "gpu")
+                    {
+                        GpuDetector.SetMode(mode);
+                        payload = new { ok = true, mode = GpuDetector.PreferredMode, status = GpuDetector.Detect() };
+                    }
+                    else
+                    {
+                        payload = new { ok = false, error = "mode 必须是 auto/cpu/gpu" };
+                        status = 400;
+                    }
+
+                    break;
+                }
                 case ("/suggest", "POST"):
                     payload = await HandleSuggestAsync(ctx, ct).ConfigureAwait(false);
                     break;

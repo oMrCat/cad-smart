@@ -14,6 +14,9 @@ using CadSmart.Core.Matching;
 using CadSmart.Core.Providers;
 using CadSmart.Core.Suggestion;
 using CadSmart.Data;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 
 namespace CadSmart.Simulator.Wpf;
 
@@ -24,6 +27,7 @@ public partial class MainWindow : Window
     private readonly SuggestionService _service;
     private SuggestionResult? _current;
     private CancellationTokenSource? _debounce;
+    private string _gpuMode = "auto"; // auto / cpu / gpu（与引擎 GpuDetector.PreferredMode 同步）
 
     public MainWindow()
     {
@@ -38,7 +42,96 @@ public partial class MainWindow : Window
         _repo = JsonCommandRepository.LoadFromStream(stream, _behavior);
         _service = new SuggestionService(_repo, _behavior, new MatchEngine(), new NullLlmProvider());
 
+        Loaded += async (_, _) => await RefreshGpuStatusAsync();
         InputBox.Focus();
+    }
+
+    /// <summary>
+    /// GPU 加速开关：auto → gpu → cpu 循环切换，并同步到引擎服务（POST /gpu/mode）。
+    /// 默认 auto = 自动识别并开启。
+    /// </summary>
+    private async void GpuButton_Click(object sender, RoutedEventArgs e)
+    {
+        _gpuMode = _gpuMode switch
+        {
+            "auto" => "gpu",
+            "gpu" => "cpu",
+            _ => "auto",
+        };
+
+        UpdateGpuButtonLabel("切换中…");
+
+        // 本地模式直接调 GpuDetector（同进程引擎）；远程引擎模式走 HTTP（尽力而为）
+        GpuDetector.SetMode(_gpuMode);
+        var status = GpuDetector.Detect();
+        ShowGpuStatus(status);
+
+        try
+        {
+            using var http = new System.Net.Http.HttpClient { Timeout = TimeSpan.FromSeconds(5) };
+            var content = new StringContent(
+                JsonSerializer.Serialize(new { mode = _gpuMode }),
+                Encoding.UTF8, "application/json");
+            await http.PostAsync("http://127.0.0.1:46200/gpu/mode", content);
+        }
+        catch
+        {
+            // 引擎服务未启动时仅本地生效（WPF 模拟器内置引擎场景）
+        }
+    }
+
+    private async Task RefreshGpuStatusAsync()
+    {
+        try
+        {
+            using var http = new System.Net.Http.HttpClient { Timeout = TimeSpan.FromSeconds(5) };
+            var json = await http.GetStringAsync("http://127.0.0.1:46200/gpu/status");
+            var doc = JsonSerializer.Deserialize<JsonElement>(json);
+            var s = new GpuStatus
+            {
+                GpuName = doc.TryGetProperty("GpuName", out var gn) ? gn.GetString() ?? "" : "",
+                EngineVariant = doc.TryGetProperty("EngineVariant", out var ev) ? ev.GetString() ?? "" : "",
+                CanOffload = doc.TryGetProperty("CanOffload", out var co) && co.GetBoolean(),
+                Reason = doc.TryGetProperty("Reason", out var rs) ? rs.GetString() ?? "" : "",
+                ActiveDevice = doc.TryGetProperty("ActiveDevice", out var ad) ? ad.GetString() ?? "cpu" : "cpu",
+            };
+            ShowGpuStatus(s);
+        }
+        catch
+        {
+            // 引擎服务不可达：用本地检测（WPF 模拟器与引擎可能不在同一进程）
+            try
+            {
+                ShowGpuStatus(GpuDetector.Detect());
+            }
+            catch
+            {
+                GpuInfoText.Text = "GPU 状态未知（引擎未启动）";
+            }
+        }
+    }
+
+    private void ShowGpuStatus(GpuStatus s)
+    {
+        UpdateGpuButtonLabel(_gpuMode);
+        GpuInfoText.Text = s.GpuName is { Length: > 0 }
+            ? $"{s.GpuName} · {s.EngineVariant} 构建 · {(s.ActiveDevice == "gpu" ? "GPU 加速已启用" : "CPU 模式")}{(s.Reason is { Length: > 0 } ? $" — {s.Reason}" : "")}"
+            : "无 NVIDIA GPU · CPU 模式";
+    }
+
+    private void UpdateGpuButtonLabel(string mode)
+    {
+        GpuButton.Content = mode switch
+        {
+            "auto" => "⚡ GPU 加速: 自动",
+            "gpu" => "⚡ GPU 加速: 强制开启",
+            _ => "⚡ GPU 加速: 已关闭",
+        };
+        // 有 GPU 且可用时按钮高亮
+        var s = GpuDetector.Detect();
+        GpuButton.Foreground = s.CanOffload && mode is "auto" or "gpu"
+            ? System.Windows.Media.Brushes.LimeGreen
+            : System.Windows.Media.Brushes.Gray;
     }
 
     private async void OnTextChanged(object sender, TextChangedEventArgs e)
