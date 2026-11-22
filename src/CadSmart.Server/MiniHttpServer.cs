@@ -4,6 +4,7 @@ using System.Net;
 using System.Text;
 using System.Text.Json;
 using CadSmart.Core.Domain;
+using CadSmart.Core.Setup;
 using CadSmart.Core.Suggestion;
 
 /// <summary>
@@ -12,6 +13,7 @@ using CadSmart.Core.Suggestion;
 ///
 /// API：
 ///   GET  /health                       → {"ok":true}
+///   GET  /llm/status                   → 智能模式 + 安装引导清单（路线A）
 ///   POST /suggest  {"input":"画个圆"}   → SuggestionResult JSON
 ///   POST /accept   {"commandId":"..."} → {"ok":true}
 ///
@@ -25,13 +27,15 @@ public sealed class MiniHttpServer : IDisposable
     };
 
     private readonly ISuggestionEngine _engine;
+    private readonly LlmAvailability? _availability;
     private readonly HttpListener _listener = new();
     private CancellationTokenSource? _cts;
     private Task? _loop;
 
-    public MiniHttpServer(ISuggestionEngine engine, int port)
+    public MiniHttpServer(ISuggestionEngine engine, int port, LlmAvailability? availability = null)
     {
         _engine = engine;
+        _availability = availability;
         Port = port;
         _listener.Prefixes.Add($"http://127.0.0.1:{port}/");
     }
@@ -122,6 +126,10 @@ public sealed class MiniHttpServer : IDisposable
             {
                 case ("/health", "GET"):
                     payload = new { ok = true };
+                    break;
+                case ("/llm/status", "GET"):
+                    payload = _availability
+                        ?? (object)new { mode = "unknown", userMessage = "未检测" };
                     break;
                 case ("/suggest", "POST"):
                     payload = await HandleSuggestAsync(ctx, ct).ConfigureAwait(false);
