@@ -34,7 +34,8 @@ public abstract class OpenAiCompatibleProviderBase : ILlmProvider
     private static readonly JsonSerializerOptions JsonOpts = new()
     {
         Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-        PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
+        // 序列化载荷全为匿名类型/字典，属性名手写已是 snake_case（如 response_format、chat_template_kwargs），
+        // 无需命名策略（SnakeCaseLower 为 net8 API，net6 无此成员）。
     };
 
     protected readonly HttpClient Http;

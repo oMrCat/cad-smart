@@ -131,7 +131,7 @@ public static class PromptTemplates
         var sb = new StringBuilder(raw.Length);
         foreach (var ch in raw.Trim())
         {
-            if (char.IsAsciiLetterOrDigit(ch) || ch == '_' || ch == '-')
+            if ((char.IsAscii(ch) && char.IsLetterOrDigit(ch)) || ch == '_' || ch == '-')
             {
                 sb.Append(char.ToUpperInvariant(ch));
             }

@@ -5,7 +5,7 @@ namespace CadSmart.Core.Domain;
 /// </summary>
 public sealed class CommandCandidate
 {
-    public required CadCommand Command { get; init; }
+    public CadCommand Command { get; init; } = null!;
 
     /// <summary>综合得分（0~100+）。</summary>
     public double Score { get; set; }

@@ -5,7 +5,7 @@ namespace CadSmart.Core.Domain;
 /// </summary>
 public sealed class SuggestionResult
 {
-    public required IReadOnlyList<CommandCandidate> Items { get; init; }
+    public IReadOnlyList<CommandCandidate> Items { get; init; } = Array.Empty<CommandCandidate>();
 
     /// <summary>规则引擎耗时（毫秒）。</summary>
     public long RuleLatencyMs { get; set; }
