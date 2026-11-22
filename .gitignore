@@ -1,7 +1,9 @@
 # Build results
-bin/
-obj/
-dist/
+[Bb]in/
+[Oo]bj/
+dist/server/
+dist/server-net6/
+dist/server-selfcontained/
 publish/
 
 # IDE
@@ -13,6 +15,8 @@ publish/
 # Runtime data
 usage.json
 *.tmp
+*.log
+server.pid
 
 # OS
 Thumbs.db
