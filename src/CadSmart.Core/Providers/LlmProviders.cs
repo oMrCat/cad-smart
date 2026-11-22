@@ -148,21 +148,31 @@ public sealed class CloudLlmProvider : OpenAiCompatibleProviderBase
 
 /// <summary>
 /// 本地供应商（LocModel / Ollama / LM Studio 等 OpenAI 兼容本地运行时）。
-/// 启动时自动探测本地端口，发现哪个就用哪个。
+/// 探测目标 = 本机端口 + 可选远程主机（局域网推理服务器场景，如 192.168.1.111）。
 /// </summary>
 public sealed class LocalLlmProvider : OpenAiCompatibleProviderBase
 {
     private static readonly int[] DefaultPorts = [11434, 1234, 8080];
 
     private readonly int[] _ports;
+    private readonly string[] _hosts;
     private DateTime _lastProbeUtc = DateTime.MinValue;
     private int _openPort;
+    private string _openHost = "127.0.0.1";
     private readonly object _lock = new();
 
-    public LocalLlmProvider(HttpClient http, LlmOptions options, int[]? ports = null)
+    /// <summary>
+    /// 构造本地/局域网供应商。
+    /// </summary>
+    /// <param name="http">HTTP 客户端</param>
+    /// <param name="options">LLM 配置（探测成功后 Endpoint 会被自动写入）</param>
+    /// <param name="ports">探测端口列表（默认 11434/1234/8080）</param>
+    /// <param name="hosts">探测主机列表（默认仅 127.0.0.1；可加局域网 IP，如 192.168.1.111）</param>
+    public LocalLlmProvider(HttpClient http, LlmOptions options, int[]? ports = null, string[]? hosts = null)
         : base(http, options)
     {
         _ports = ports is { Length: > 0 } ? ports : DefaultPorts;
+        _hosts = hosts is { Length: > 0 } ? hosts : ["127.0.0.1"];
     }
 
     public override string Name => "local";
@@ -170,9 +180,18 @@ public sealed class LocalLlmProvider : OpenAiCompatibleProviderBase
     /// <summary>注释：LocModel 的 API 端口以其实际文档为准，可通过 ports 参数配置。</summary>
     public static IReadOnlyList<int> KnownPorts => DefaultPorts;
 
+    /// <summary>探测成功的主机（127.0.0.1 或局域网 IP）。</summary>
+    public string OpenHost => _openHost;
+
+    /// <summary>探测成功的端口。</summary>
+    public int OpenPort => _openPort;
+
     public override bool IsAvailable => _openPort > 0 && RecentlyProbed();
 
-    /// <summary>探测本地端口（Ollama 11434 / LM Studio 1234 / 自定义）。结果缓存 60 秒。</summary>
+    /// <summary>
+    /// 探测主机 × 端口组合（800ms/目标 超时）。结果缓存 60 秒。
+    /// 主机列表含局域网 IP 时即为"局域网推理服务器"模式。
+    /// </summary>
     public async Task<bool> ProbeAsync(CancellationToken ct = default)
     {
         lock (_lock)
@@ -183,39 +202,44 @@ public sealed class LocalLlmProvider : OpenAiCompatibleProviderBase
             }
         }
 
-        foreach (var port in _ports)
+        foreach (var host in _hosts)
         {
-            try
+            foreach (var port in _ports)
             {
-                using var cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
-                cts.CancelAfter(800);
-                using var req = new HttpRequestMessage(HttpMethod.Get, $"http://127.0.0.1:{port}/v1/models");
-                using var resp = await Http.SendAsync(req, cts.Token).ConfigureAwait(false);
-                if (resp.IsSuccessStatusCode)
+                try
                 {
-                    lock (_lock)
+                    using var cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
+                    cts.CancelAfter(800);
+                    using var req = new HttpRequestMessage(HttpMethod.Get, $"http://{host}:{port}/v1/models");
+                    using var resp = await Http.SendAsync(req, cts.Token).ConfigureAwait(false);
+                    if (resp.IsSuccessStatusCode)
                     {
-                        _openPort = port;
-                        _lastProbeUtc = DateTime.UtcNow;
-                        Options.Endpoint = $"http://127.0.0.1:{port}/v1/chat/completions";
-                    }
+                        lock (_lock)
+                        {
+                            _openPort = port;
+                            _openHost = host;
+                            _lastProbeUtc = DateTime.UtcNow;
+                            Options.Endpoint = $"http://{host}:{port}/v1/chat/completions";
+                        }
 
-                    return true;
+                        return true;
+                    }
                 }
-            }
-            catch (OperationCanceledException) when (!ct.IsCancellationRequested)
-            {
-                // 端口探测超时 → 尝试下一个
-            }
-            catch (Exception)
-            {
-                // 连接失败 → 尝试下一个
+                catch (OperationCanceledException) when (!ct.IsCancellationRequested)
+                {
+                    // 探测超时 → 尝试下一个组合
+                }
+                catch (Exception)
+                {
+                    // 连接失败 → 尝试下一个组合
+                }
             }
         }
 
         lock (_lock)
         {
             _openPort = 0;
+            _openHost = string.Empty;
             _lastProbeUtc = DateTime.UtcNow;
         }
 
