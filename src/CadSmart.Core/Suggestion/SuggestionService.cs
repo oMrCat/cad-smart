@@ -18,7 +18,8 @@ public sealed class SuggestionService
     private readonly MatchEngine _engine;
     private readonly ILlmProvider? _llm;
 
-    /// <summary>LLM 融合等待窗口（毫秒）。超时即放弃本轮 LLM 结果（降级纯规则）。</summary>
+    /// <summary>LLM 融合等待窗口（毫秒）。超时即放弃本轮 LLM 结果（降级纯规则）。
+    /// 默认 300ms 适配云端/已热身的本地模型；本地 CPU 模型建议调到 20000+（真实推理 10~20s）。</summary>
     public int LlmWaitMs { get; set; } = 300;
 
     /// <summary>本地供应商（若配置）在建议前自动探测。</summary>
@@ -109,7 +110,10 @@ public sealed class SuggestionService
         };
 
         // ---- 通道 2：LLM（异步、可降级）----
-        if (_llm is { IsAvailable: true } && !string.IsNullOrWhiteSpace(userInput))
+        // 两阶段策略：规则粗筛 Top-N 作为候选范围交给 LLM 精排（本地 CPU 模型处理 6000 token
+        // 的全库表要 90+ 秒，30 条粗筛表 <1k token 只需数秒）。粗筛不足时再补足到下限。
+        // 注意：本地供应商必须先 ProbeAsync 再判 IsAvailable（探测前 _openPort=0 恒为 false）。
+        if (_llm is not null && !string.IsNullOrWhiteSpace(userInput))
         {
             if (_local is not null)
             {
@@ -118,10 +122,32 @@ public sealed class SuggestionService
 
             if (_llm.IsAvailable)
             {
+                // LLM 候选范围：规则命中 + 高使用频率命令补足（保证个性化常用药在列）
+                const int LlmScopeSize = 30;
+                var scopeList = new List<CadCommand>();
+                var scopeIds = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                foreach (var r in rules.Take(LlmScopeSize))
+                {
+                    scopeList.Add(r.Command);
+                    scopeIds.Add(r.Command.Id);
+                }
+
+                if (scopeList.Count < LlmScopeSize)
+                {
+                    var freq = commands
+                        .Where(c => !scopeIds.Contains(c.Id))
+                        .OrderByDescending(c => usage.GetValueOrDefault(c.Id))
+                        .ThenBy(c => c.Id, StringComparer.Ordinal);
+                    foreach (var c in freq.Take(LlmScopeSize - scopeList.Count))
+                    {
+                        scopeList.Add(c);
+                    }
+                }
+
                 using var linked = CancellationTokenSource.CreateLinkedTokenSource(ct);
                 linked.CancelAfter(Math.Max(LlmWaitMs, 1));
 
-                var llmTask = _llm.RecommendAsync(userInput!, commands, linked.Token);
+                var llmTask = _llm.RecommendAsync(userInput!, scopeList, linked.Token, commands);
 
                 // 吞掉被放弃任务的异常/取消，避免 UnobservedTaskException
                 _ = llmTask.ContinueWith(

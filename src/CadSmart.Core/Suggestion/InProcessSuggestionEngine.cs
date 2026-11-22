@@ -21,5 +21,11 @@ public sealed class InProcessSuggestionEngine : ISuggestionEngine
 
     public SuggestionResult SuggestNext() => _service.SuggestNext();
 
+    public int LlmWaitMs
+    {
+        get => _service.LlmWaitMs;
+        set => _service.LlmWaitMs = value;
+    }
+
     public void Accept(string commandId) => _service.Accept(commandId);
 }

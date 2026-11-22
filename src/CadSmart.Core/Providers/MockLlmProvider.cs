@@ -36,7 +36,8 @@ public sealed class MockLlmProvider : ILlmProvider
         => _map[input.Trim()] = recommendations;
 
     public async Task<IReadOnlyList<LlmRecommendation>?> RecommendAsync(
-        string userInput, IReadOnlyList<CadCommand> candidateScope, CancellationToken cancellationToken = default)
+        string userInput, IReadOnlyList<CadCommand> candidateScope, CancellationToken cancellationToken = default,
+        IReadOnlyList<CadCommand>? fullCatalog = null)
     {
         if (_delayMs > 0)
         {

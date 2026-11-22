@@ -20,7 +20,7 @@ public sealed class LlmOptions
     public string ApiKey { get; set; } = string.Empty;
 
     /// <summary>Provider 级超时（毫秒）。编排层另有 300ms 融合窗口。</summary>
-    public int TimeoutMs { get; set; } = 3000;
+    public int TimeoutMs { get; set; } = 60000;
 
     /// <summary>温度（低值保证输出稳定）。</summary>
     public double Temperature { get; set; } = 0.1;
@@ -53,24 +53,32 @@ public abstract class OpenAiCompatibleProviderBase : ILlmProvider
     public async Task<IReadOnlyList<LlmRecommendation>?> RecommendAsync(
         string userInput,
         IReadOnlyList<CadCommand> candidateScope,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default,
+        IReadOnlyList<CadCommand>? fullCatalog = null)
     {
         if (!IsAvailable || candidateScope.Count == 0)
         {
             return null;
         }
 
-        var payload = new
+        // 思考型模型（Qwen3/3.5 等）需要禁用推理模式，否则输出全是 reasoning、content 为空，
+        // 且 4096 token 都冲不出思考区。chat_template_kwargs.enable_thinking=false 是 llama.cpp/
+        // Ollama 兼容层的标准开关；云端 OpenAI 兼容 API 会忽略未知字段，不影响云端路径。
+        var payload = new Dictionary<string, object?>
         {
-            model = Options.Model,
-            temperature = Options.Temperature,
-            messages = new object[]
+            ["model"] = Options.Model,
+            ["temperature"] = Options.Temperature,
+            ["max_tokens"] = 512,
+            ["messages"] = new object[]
             {
-                new { role = "system", content = PromptTemplates.BuildSystemPrompt(candidateScope) },
+                new { role = "system", content = PromptTemplates.BuildSystemPrompt(candidateScope, catalog: fullCatalog) },
                 new { role = "user", content = PromptTemplates.BuildUserPrompt(userInput) },
             },
-            response_format = new { type = "json_object" },
+            ["chat_template_kwargs"] = new { enable_thinking = false },
         };
+
+        // response_format=json_object 部分本地运行时不支持（llama.cpp 老版本会报错），
+        // 提示词已含严格 JSON 约束，云端可加、本地探测式跳过——统一不加，靠解析容错兜底。
 
         using var request = new HttpRequestMessage(HttpMethod.Post, Options.Endpoint)
         {
@@ -90,19 +98,27 @@ public abstract class OpenAiCompatibleProviderBase : ILlmProvider
             response.EnsureSuccessStatusCode();
             var body = await response.Content.ReadAsStringAsync(timeoutCts.Token).ConfigureAwait(false);
             var content = ExtractMessageContent(body);
+            Console.Error.WriteLine($"[CadSmart.LLM] scope={candidateScope.Count} contentLen={content?.Length ?? 0} content={(content ?? "(null)").Truncate(200)}");
             return PromptTemplates.ParseRecommendations(content);
         }
         catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {
             throw; // 外部真取消 → 上抛由编排层处理
         }
-        catch (OperationCanceledException)
+        catch (OperationCanceledException ex)
         {
+            Console.Error.WriteLine($"[CadSmart.LLM] timeout {Options.TimeoutMs}ms: {ex.GetType().Name}");
             return null; // 自身超时 → 降级：规则兜底
         }
-        catch (Exception)
+        catch (HttpRequestException ex)
         {
+            Console.Error.WriteLine($"[CadSmart.LLM] HTTP error: {ex.Message} (status={ex.StatusCode})");
             return null; // 网络/协议错误 → 规则兜底
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"[CadSmart.LLM] {ex.GetType().Name}: {ex.Message}");
+            return null; // 其他错误 → 规则兜底
         }
     }
 
@@ -259,6 +275,13 @@ public sealed class NullLlmProvider : ILlmProvider
     public bool IsAvailable => false;
 
     public Task<IReadOnlyList<LlmRecommendation>?> RecommendAsync(
-        string userInput, IReadOnlyList<CadCommand> candidateScope, CancellationToken cancellationToken = default)
+        string userInput, IReadOnlyList<CadCommand> candidateScope, CancellationToken cancellationToken = default,
+        IReadOnlyList<CadCommand>? fullCatalog = null)
         => Task.FromResult<IReadOnlyList<LlmRecommendation>?>(null);
+}
+
+/// <summary>调试辅助：截断字符串。</summary>
+internal static class StringExt
+{
+    public static string Truncate(this string s, int max) => s.Length <= max ? s : s[..max] + "…";
 }

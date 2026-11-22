@@ -29,6 +29,9 @@ public sealed class RemoteSuggestionEngine : ISuggestionEngine
 
     public string BaseUrl { get; }
 
+    /// <summary>远程模式无本地 LLM 窗口概念，读写占位（服务端自行管理等待窗口）。</summary>
+    public int LlmWaitMs { get; set; } = 300;
+
     /// <summary>服务是否可达（供插件启动时选择进程内/远程模式）。</summary>
     public async Task<bool> PingAsync(CancellationToken ct = default)
     {

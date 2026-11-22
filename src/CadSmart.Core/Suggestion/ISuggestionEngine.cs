@@ -16,5 +16,8 @@ public interface ISuggestionEngine
     /// <summary>上下文感知推荐：根据最近执行序列推荐下一个命令。</summary>
     SuggestionResult SuggestNext();
 
+    /// <summary>LLM 融合等待窗口（毫秒），供服务层按场景调整。</summary>
+    int LlmWaitMs { get; set; }
+
     void Accept(string commandId);
 }

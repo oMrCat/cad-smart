@@ -180,6 +180,14 @@ public sealed class MiniHttpServer : IDisposable
     {
         var body = await ReadBodyAsync(ctx.Request, ct).ConfigureAwait(false);
         var input = ExtractString(body, "input");
+
+        // 可选的 waitMs 覆盖（客户端可按场景要求等待真实 LLM 结果，如"出图前语义确认"）
+        var waitMs = ExtractInt(body, "waitMs");
+        if (waitMs is > 0 and <= 30000)
+        {
+            _engine.LlmWaitMs = waitMs.Value;
+        }
+
         return await _engine.SuggestAsync(input, ct).ConfigureAwait(false);
     }
 
@@ -214,6 +222,22 @@ public sealed class MiniHttpServer : IDisposable
         catch (JsonException)
         {
             return string.Empty;
+        }
+    }
+
+    private static int? ExtractInt(string json, string key)
+    {
+        try
+        {
+            using var doc = JsonDocument.Parse(json);
+            return doc.RootElement.TryGetProperty(key, out var el) && el.ValueKind == JsonValueKind.Number
+                && el.TryGetInt32(out var n)
+                ? n
+                : null;
+        }
+        catch (JsonException)
+        {
+            return null;
         }
     }
 }

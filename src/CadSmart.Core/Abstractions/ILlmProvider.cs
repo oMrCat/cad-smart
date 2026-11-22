@@ -22,9 +22,11 @@ public interface ILlmProvider
     /// <summary>
     /// 根据用户输入与候选命令范围给出推荐。
     /// 返回 null 表示本 provider 无结果（交由规则兜底）。
+    /// fullCatalog 为全库轻量目录（id+zh），保证语义召回不受粗筛范围限制；可为 null（云端小模型场景省 token）。
     /// </summary>
     Task<IReadOnlyList<LlmRecommendation>?> RecommendAsync(
         string userInput,
         IReadOnlyList<CadCommand> candidateScope,
-        CancellationToken cancellationToken = default);
+        CancellationToken cancellationToken = default,
+        IReadOnlyList<CadCommand>? fullCatalog = null);
 }
