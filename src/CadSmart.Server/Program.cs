@@ -127,6 +127,10 @@ SafeLog("按 Ctrl+C 或回车退出。");
 // 无控制台/被托管运行（stdin 关闭）时 ReadLine 立即返回 null 导致服务退出——改为无限等待，
 // 退出只走 Ctrl+C（Console.CancelKeyPress）或进程被杀。
 // 用 Task.Delay(Timeout.Infinite) + finally 保存行为数据。
+// 无控制台/被托管运行（stdin 关闭）时 ReadLine 立即返回 null 导致服务退出——改为无限等待，
+// 退出只走 Ctrl+C（Console.CancelKeyPress）或进程被杀。
+// 用 Task.Delay(Timeout.Infinite) + ProcessExit/CancelKeyPress 保存行为数据。
+// 另加 30 秒定时保存：被强杀（taskkill）时数据也不丢。
 AppDomain.CurrentDomain.ProcessExit += (_, _) => behavior.Save();
 Console.CancelKeyPress += (_, e) =>
 {
@@ -135,6 +139,15 @@ Console.CancelKeyPress += (_, e) =>
     server.Dispose();
     Environment.Exit(0);
 };
+
+_ = Task.Run(async () =>
+{
+    while (true)
+    {
+        await Task.Delay(30_000).ConfigureAwait(false);
+        behavior.Save();
+    }
+});
 
 await Task.Delay(Timeout.Infinite);
 return 0;

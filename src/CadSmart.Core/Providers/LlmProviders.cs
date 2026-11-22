@@ -205,6 +205,9 @@ public sealed class LocalLlmProvider : OpenAiCompatibleProviderBase
 
     public override bool IsAvailable => _openPort > 0 && RecentlyProbed();
 
+    /// <summary>是否需要重新探测（缓存过期即 true；已过期失败结果 60s 后重试）。</summary>
+    public bool NeedsProbe => !RecentlyProbed();
+
     /// <summary>
     /// 探测主机 × 端口组合（800ms/目标 超时）。结果缓存 60 秒。
     /// 主机列表含局域网 IP 时即为"局域网推理服务器"模式。

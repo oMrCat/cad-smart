@@ -181,9 +181,10 @@ public sealed class MiniHttpServer : IDisposable
         var body = await ReadBodyAsync(ctx.Request, ct).ConfigureAwait(false);
         var input = ExtractString(body, "input");
 
-        // 可选的 waitMs 覆盖（客户端可按场景要求等待真实 LLM 结果，如"出图前语义确认"）
+        // 可选的 waitMs 覆盖（客户端可按场景要求等待真实 LLM 结果，如"出图前语义确认"）。
+        // 上限 60s：本地 CPU 模型 2k token prompt 推理实测 30s+。
         var waitMs = ExtractInt(body, "waitMs");
-        if (waitMs is > 0 and <= 30000)
+        if (waitMs is > 0 and <= 60000)
         {
             _engine.LlmWaitMs = waitMs.Value;
         }
@@ -195,9 +196,11 @@ public sealed class MiniHttpServer : IDisposable
     {
         var body = await ReadBodyAsync(ctx.Request, ct).ConfigureAwait(false);
         var id = ExtractString(body, "commandId");
+        Console.Error.WriteLine($"[CadSmart.Accept] bodyLen={body.Length} id='{id}'");
         if (!string.IsNullOrWhiteSpace(id))
         {
             _engine.Accept(id);
+            Console.Error.WriteLine($"[CadSmart.Accept] accepted {id}");
         }
 
         return new { ok = true };

@@ -115,7 +115,9 @@ public sealed class SuggestionService
         // 注意：本地供应商必须先 ProbeAsync 再判 IsAvailable（探测前 _openPort=0 恒为 false）。
         if (_llm is not null && !string.IsNullOrWhiteSpace(userInput))
         {
-            if (_local is not null)
+            // 探测节流：探测成功/失败都有 60s 缓存，未过期时跳过 ProbeAsync（省 100ms+ HTTP 往返）。
+            // 只有缓存过期才真正探测。
+            if (_local is not null && _local.NeedsProbe)
             {
                 await _local.ProbeAsync(ct).ConfigureAwait(false);
             }
